@@ -9,7 +9,7 @@ use warnings;
 
 use IO::File;
 use File::Basename;
-use Fax::DataFax::DateTime qw(get_date_format);
+# use Fax::DataFax::DateTime qw(get_date_format);
 
 # This allows declaration       use DataFax ':all';
 # If you do not need this, moving things directly into @EXPORT or
@@ -18,7 +18,7 @@ our @ISA;
 our %EXPORT_TAGS = ( 'all' => [ qw(describe) ] );
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT      = qw( );
-our $VERSION     = '1.00';
+our $VERSION     = '1.01';
 
 =head1 NAME
 
@@ -878,6 +878,124 @@ sub echoMSG {
     } else { print "$msg\n"; }
 }
 
+=over 4
+
+=item *  get_date_format($r1, $r2, $r3, $ds)
+
+Input variables:
+
+  $r1 - date range 1: 'min:max'
+  $r2 - date range 2: 'min:max'
+  $r3 - date range 3: 'min:max'
+  $ds - date separator
+
+Variables used or routines called:
+
+  None.
+
+How to use:
+
+  # the $dft = 'MM/DD/YY'
+  my $dft = $self->get_date_format('1:12','1:31','1:2');
+  # the $dft = 'MM/DD/YYYY'
+     $dft = $self->get_date_format('1:12','1:31','0:2002');
+
+Return: the date format.
+
+=back
+
+=cut
+
+sub get_date_format {
+    my $self = shift;
+    my ($r1, $r2, $r3, $ds) = @_;
+    # Input variables:
+    #   $r1 - date range 1: 'min:max'
+    #   $r2 - date range 2: 'min:max'
+    #   $r3 - date range 3: 'min:max'
+    #   $ds - date separator
+    #
+    my ($mn1, $mx1) = split /:/, $r1;
+    my ($mn2, $mx2) = split /:/, $r2;
+    my ($mn3, $mx3) = split /:/, $r3;
+    $ds = '/' if !$ds;
+    my ($msg, $dft, $d1, $d2, $d3) = ("", "", "", "", "");
+    if (($mn1>31 && $mx1<=99) || ($mn1>99 && $mx1<10000)) {
+        # 1st fd is YY or YYYY
+        if ($mn1>31 && $mx1<=99) {      # 1st fd is YY
+            $d1 = 'YY';
+        } else { $d1 = 'YYYY'; }        # 1st fd is YYYY
+        if ($mn2>=1 && $mx2<=12) {      # 2nd fd is MM
+            $d2 = 'MM';
+        } elsif ($mn2>=1 && $mx2<=31) { # 2nd fd is DD
+            $d2 = 'DD';
+        }
+        if ($d1 eq 'MM' && $mn3>=1 && $mx3<=12) {  # 3rd fd is DD
+            $d3 = 'DD';
+        } elsif ($mn3>=1 && $mx3<=12) { # 3rd fd is MM
+            $d3 = 'MM';
+        } elsif ($mn3>=1 && $mx3<=31) {  # 3rd fd is DD
+            $d3 = 'DD';
+        }
+    } elsif ($mn1>=1 && $mx1<=12) {     # 1st fd is MM
+        $d1 = 'MM';
+        if ($mx2>31 && $mx2<=99) {          # 2nd fd is YY
+            $d2 = 'YY';
+        } elsif ($mx2>99 && $mx2<10000) {   # 2nd fd is YYYY
+            $d2 = 'YY';
+        } elsif ($mn2>=1 && $mx2<=31) {     # 2nd fd is DD
+            $d2 = 'DD';
+        }
+        if ($d2 eq 'DD' && $mx3<=99) {      # 3nd fd is YY
+            $d3 = 'YY';
+        } elsif ($mn3>31 && $mx3<=99) {     # 3nd fd is YY
+            $d3 = 'YY';
+        } elsif ($mn3>99 && $mx3<10000) {   # 3nd fd is YYYY
+            $d3 = 'YYYY';
+        } elsif ($mn3>=1 && $mx3<=31) {     # 3nd fd is DD
+            $d3 = 'DD';
+        }
+    } elsif ($mn1>=1 && $mx1<=31) {     # 1st fd is DD
+        $d1 = 'DD';
+        if ($mx2>31 && $mx2<=99) {          # 2nd fd is YY
+            $d2 = 'YY';
+        } elsif ($mx2>99 && $mx2<10000) {   # 2nd fd is YYYY
+            $d2 = 'YY';
+        } elsif ($mn2>=1 && $mx2<=12) {     # 2nd fd is MM
+            $d2 = 'MM';
+        }
+        if ($d2 eq 'MM' && $mx3<=99) {      # 3nd fd is YY
+            $d3 = 'YY';
+        } elsif ($mx3>31 && $mx3<=99) {     # 3nd fd is YY
+            $d3 = 'YY';
+        } elsif ($mx3>99 && $mx3<10000) {   # 3nd fd is YYYY
+            $d3 = 'YYYY';
+        } elsif ($mn3>=1 && $mx3<=12) {     # 3nd fd is MM
+            $d3 = 'MM';
+        }
+    } else {                                # 1st fd is YY (32~99)?
+        $d1 = 'YY';
+        if ($mn2>=1 && $mx2<=12) {      # 2nd fd is MM
+            $d2 = 'MM';
+        } elsif ($mn2>=1 && $mx2<=31) { # 2nd fd is DD
+            $d2 = 'DD';
+        }
+        if ($d1 eq 'MM' && $mn3>=1 && $mx3<=12) {  # 3rd fd is DD
+            $d3 = 'DD';
+        } elsif ($mn3>=1 && $mx3<=12) { # 3rd fd is MM
+            $d3 = 'MM';
+        } elsif ($mn3>=1 && $mx3<=31) {  # 3rd fd is DD
+            $d3 = 'DD';
+        }
+    }
+    if ($d1 && $d2 && $d3 && ($d1 ne $d2) && ($d2 ne $d3)) {
+        $dft = join $ds, $d1, $d2, $d3;
+    } else {
+        $msg = "illegal date: $d1($r1), $d2($r2), $d3($r3)";
+    }
+    return ($dft) ? $dft : $msg;
+}
+
 1;   # ensure that the module can be successfully used.
 
 __END__
@@ -968,7 +1086,10 @@ Hanming Tu, hanming_tu@yahoo.com
 
 =over 4
 
-=item * Version 1.00: 10/26/2002 - ported to this class
+=item * Version 1.01: 10/30/2002 - ported I<get_date_format> from 
+B<Fax::DataFax::DateTime>.
+
+=item * Version 1.00: 10/26/2002 - Ported to this class
 
 I ported from the initial class and just keep the describing/scanning
 capability in this class.. 
