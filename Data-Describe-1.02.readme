@@ -343,6 +343,8 @@ AUTHOR
     Hanming Tu, hanming_tu@yahoo.com
 
 CODING HISTORY
+    * Version 1.02: 11/03/2002 - add Makefile.PL to include required classes
+    for testing.
     * Version 1.01: 10/30/2002 - ported *get_date_format* from
     Fax::DataFax::DateTime.
     * Version 1.00: 10/26/2002 - Ported to this class

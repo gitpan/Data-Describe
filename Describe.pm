@@ -18,7 +18,7 @@ our @ISA;
 our %EXPORT_TAGS = ( 'all' => [ qw(describe) ] );
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT      = qw( );
-our $VERSION     = '1.01';
+our $VERSION     = '1.02';
 
 =head1 NAME
 
@@ -1085,6 +1085,9 @@ Hanming Tu, hanming_tu@yahoo.com
 =head1 CODING HISTORY
 
 =over 4
+
+=item * Version 1.02: 11/03/2002 - add Makefile.PL to include
+required classes for testing. 
 
 =item * Version 1.01: 10/30/2002 - ported I<get_date_format> from 
 B<Fax::DataFax::DateTime>.
