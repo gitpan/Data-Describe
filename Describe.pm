@@ -18,7 +18,7 @@ our @ISA;
 our %EXPORT_TAGS = ( 'all' => [ qw(describe) ] );
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT      = qw( );
-our $VERSION     = '1.02';
+our $VERSION     = '1.03';
 
 =head1 NAME
 
@@ -720,6 +720,8 @@ sub output {
     #
     # let's determine output file name
     $ifn = $self->get_ifn if !$ifn;
+    my $ds = '/'; 
+    $ifn = 'dsbf.dat' if !$ifn;
     my ($bnm,$dir,$type)=fileparse($ifn,'\.\w+$');
     my $fho = ""; 
     if (!$out) {
@@ -1085,6 +1087,9 @@ Hanming Tu, hanming_tu@yahoo.com
 =head1 CODING HISTORY
 
 =over 4
+
+=item * Version 1.03: 11/06/2002 - fixed a bug in I<output> method with
+fileparse(): need a valid pathname.
 
 =item * Version 1.02: 11/03/2002 - add Makefile.PL to include
 required classes for testing. 

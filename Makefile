@@ -12,10 +12,10 @@
 
 #	ABSTRACT => q[Perl extension for scanning/describing a text file or array.]
 #	AUTHOR => q[geotiger2001@yahoo.com]
-#	DISTNAME => q[Data-Describe-1.02.tar.gz]
+#	DISTNAME => q[Data-Describe-1.03.tar.gz]
 #	NAME => q[Data::Describe]
 #	PREREQ_PM => { Test::Harness=>q[0.1], Test::More=>q[0.45] }
-#	VERSION => q[1.02]
+#	VERSION => q[1.03]
 #	test => { TESTS=>q[t/Describe.t] }
 
 # --- MakeMaker post_initialize section:
@@ -49,11 +49,11 @@ FULL_AR = /usr/ccs/bin/ar
 # --- MakeMaker constants section:
 AR_STATIC_ARGS = cr
 NAME = Data::Describe
-DISTNAME = Data-Describe-1.02.tar.gz
+DISTNAME = Data-Describe-1.03.tar.gz
 NAME_SYM = Data_Describe
-VERSION = 1.02
-VERSION_SYM = 1_02
-XS_VERSION = 1.02
+VERSION = 1.03
+VERSION_SYM = 1_03
+XS_VERSION = 1.03
 INST_BIN = blib/bin
 INST_EXE = blib/script
 INST_LIB = blib/lib
@@ -658,7 +658,7 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd:
-	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Data-Describe-1.02.tar.gz\" VERSION=\"1,02,0,0\">\n}. qq{\t<TITLE>Data-Describe-1.02.tar.gz</TITLE>\n}. qq{\t<ABSTRACT>Perl extension for scanning/describing a text file or array.</ABSTRACT>\n}. qq{\t<AUTHOR>geotiger2001\@yahoo.com</AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<DEPENDENCY NAME=\"Test-Harness\" VERSION=\"0,1,0,0\" />\n}. qq{\t\t<DEPENDENCY NAME=\"Test-More\" VERSION=\"0,45,0,0\" />\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"sun4-solaris-64int\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Data-Describe-1.02.tar.gz.ppd
+	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Data-Describe-1.03.tar.gz\" VERSION=\"1,03,0,0\">\n}. qq{\t<TITLE>Data-Describe-1.03.tar.gz</TITLE>\n}. qq{\t<ABSTRACT>Perl extension for scanning/describing a text file or array.</ABSTRACT>\n}. qq{\t<AUTHOR>geotiger2001\@yahoo.com</AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<DEPENDENCY NAME=\"Test-Harness\" VERSION=\"0,1,0,0\" />\n}. qq{\t\t<DEPENDENCY NAME=\"Test-More\" VERSION=\"0,45,0,0\" />\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"sun4-solaris-64int\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Data-Describe-1.03.tar.gz.ppd
 
 # --- MakeMaker pm_to_blib section:
 

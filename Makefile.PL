@@ -29,10 +29,10 @@ use ExtUtils::AutoInstall (
     -version        => '0.40',
 );
 WriteMakefile(
-    DISTNAME        => 'Data-Describe-1.02.tar.gz'   ,
+    DISTNAME        => 'Data-Describe-1.03.tar.gz'   ,
     ABSTRACT        => 'Perl extension for scanning/describing a text file or array.',
     NAME            => 'Data::Describe'              ,
     PREREQ_PM       => {Test::Harness => 0.1,Test::More => 0.45,},
     AUTHOR          => 'geotiger2001@yahoo.com'      ,
-    VERSION         => 1.02                          ,
+    VERSION         => 1.03                          ,
 );
